@@ -2,7 +2,6 @@ package com.dlwlrma.oj.model.enums;
 
 import com.dlwlrma.oj.common.ErrorCode;
 import com.dlwlrma.oj.exception.BusinessException;
-import io.swagger.models.auth.In;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +39,7 @@ public enum QuestionSubmitStatusEnum {
     }
 
     //根据value得到对应的枚举值
-    private static QuestionSubmitStatusEnum getEnumByValue(Integer value) {
+    public static QuestionSubmitStatusEnum getEnumByValue(Integer value) {
         if (value == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

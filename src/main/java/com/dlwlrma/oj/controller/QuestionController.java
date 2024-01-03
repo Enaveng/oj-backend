@@ -9,10 +9,7 @@ import com.dlwlrma.oj.common.ResultUtils;
 import com.dlwlrma.oj.constant.UserConstant;
 import com.dlwlrma.oj.exception.BusinessException;
 import com.dlwlrma.oj.exception.ThrowUtils;
-import com.dlwlrma.oj.model.dto.question.QuestionAddRequest;
-import com.dlwlrma.oj.model.dto.question.QuestionEditRequest;
-import com.dlwlrma.oj.model.dto.question.QuestionQueryRequest;
-import com.dlwlrma.oj.model.dto.question.QuestionUpdateRequest;
+import com.dlwlrma.oj.model.dto.question.*;
 import com.dlwlrma.oj.model.entity.Question;
 import com.dlwlrma.oj.model.entity.User;
 import com.dlwlrma.oj.model.vo.QuestionVO;
@@ -62,6 +59,14 @@ public class QuestionController {
         List<String> tags = questionAddRequest.getTags();
         if (tags != null) {
             question.setTags(GSON.toJson(tags));
+        }
+        List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(GSON.toJson(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(GSON.toJson(judgeConfig));
         }
         //校验参数
         questionService.validQuestion(question, true);
@@ -118,6 +123,14 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(GSON.toJson(tags));
         }
+        List<JudgeCase> judgeCase = questionUpdateRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(GSON.toJson(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionUpdateRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(GSON.toJson(judgeConfig));
+        }
         // 参数校验
         questionService.validQuestion(question, false);
         long id = questionUpdateRequest.getId();
@@ -127,6 +140,27 @@ public class QuestionController {
         boolean result = questionService.updateById(question);
         return ResultUtils.success(result);
     }
+
+    /**
+     * 管理员根据id获取题目的完整信息(未脱敏数据)
+     */
+    @GetMapping("/get")
+    public BaseResponse<Question> getQuestionById(long id, HttpServletRequest request) {
+        if (id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Question question = questionService.getById(id);
+        if (question == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        User loginUser = userService.getLoginUser(request);
+        // 不是本人或管理员，不能直接获取所有信息
+        if (!question.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        return ResultUtils.success(question);
+    }
+
 
     /**
      * 根据 id 获取
@@ -160,8 +194,29 @@ public class QuestionController {
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Question> questionPage = questionService.page(new Page<>(current, size), questionService.getQueryWrapper(questionQueryRequest));
+        //返回的是脱敏信息
         return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
     }
+
+
+    /**
+     * 管理员分页获取列表 (获取的是题目的全部信息 包括答案等敏感信息)
+     *
+     * @param questionQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/list/page")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Page<Question>> listQuestionByPage(@RequestBody QuestionQueryRequest questionQueryRequest, HttpServletRequest request) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        Page<Question> questionPage = questionService.page(new Page<>(current, size), questionService.getQueryWrapper(questionQueryRequest));
+        return ResultUtils.success(questionPage);
+    }
+
 
     /**
      * 分页获取当前用户创建的资源列表
@@ -202,6 +257,14 @@ public class QuestionController {
         List<String> tags = questionEditRequest.getTags();
         if (tags != null) {
             question.setTags(GSON.toJson(tags));
+        }
+        List<JudgeCase> judgeCase = questionEditRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(GSON.toJson(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionEditRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(GSON.toJson(judgeConfig));
         }
         // 参数校验
         questionService.validQuestion(question, false);

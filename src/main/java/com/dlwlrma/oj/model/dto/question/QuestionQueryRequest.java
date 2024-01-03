@@ -1,14 +1,10 @@
 package com.dlwlrma.oj.model.dto.question;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.dlwlrma.oj.common.PageRequest;
-import com.dlwlrma.oj.config.JsonConfig;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +52,7 @@ public class QuestionQueryRequest extends PageRequest implements Serializable {
     /**
      * 判题配置(前端传递的是json对象 我们新建实体类进行封装)
      */
-    private JsonConfig judgeConfig;
+    private JudgeConfig judgeConfig;
     /**
      * 创建用户 id
      */

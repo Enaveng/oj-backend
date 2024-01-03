@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -50,9 +51,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 帖子服务实现
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @Service
 @Slf4j
