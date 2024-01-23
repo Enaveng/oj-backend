@@ -5,7 +5,7 @@ import com.dlwlrma.oj.judge.startegy.DefaultJudgeStrategy;
 import com.dlwlrma.oj.judge.startegy.JavaJudgeStrategy;
 import com.dlwlrma.oj.judge.startegy.JudgeContext;
 import com.dlwlrma.oj.judge.startegy.JudgeStrategy;
-import com.dlwlrma.oj.model.dto.questionsubmit.JudgeInfo;
+import com.dlwlrma.oj.judge.codesandbox.model.JudgeInfo;
 import com.dlwlrma.oj.model.entity.QuestionSubmit;
 import com.dlwlrma.oj.model.enums.QuestionSubmitLanguageEnum;
 import lombok.extern.slf4j.Slf4j;

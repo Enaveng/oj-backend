@@ -3,7 +3,7 @@ package com.dlwlrma.oj.judge.startegy;
 import cn.hutool.json.JSONUtil;
 import com.dlwlrma.oj.model.dto.question.JudgeCase;
 import com.dlwlrma.oj.model.dto.question.JudgeConfig;
-import com.dlwlrma.oj.model.dto.questionsubmit.JudgeInfo;
+import com.dlwlrma.oj.judge.codesandbox.model.JudgeInfo;
 import com.dlwlrma.oj.model.entity.Question;
 import com.dlwlrma.oj.model.enums.JudgeInfoMessageEnum;
 

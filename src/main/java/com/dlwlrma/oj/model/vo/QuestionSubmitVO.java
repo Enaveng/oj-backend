@@ -1,7 +1,7 @@
 package com.dlwlrma.oj.model.vo;
 
 import cn.hutool.json.JSONUtil;
-import com.dlwlrma.oj.model.dto.questionsubmit.JudgeInfo;
+import com.dlwlrma.oj.judge.codesandbox.model.JudgeInfo;
 import com.dlwlrma.oj.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

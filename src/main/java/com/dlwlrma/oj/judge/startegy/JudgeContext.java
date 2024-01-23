@@ -1,7 +1,7 @@
 package com.dlwlrma.oj.judge.startegy;
 
 import com.dlwlrma.oj.model.dto.question.JudgeCase;
-import com.dlwlrma.oj.model.dto.questionsubmit.JudgeInfo;
+import com.dlwlrma.oj.judge.codesandbox.model.JudgeInfo;
 import com.dlwlrma.oj.model.entity.Question;
 import com.dlwlrma.oj.model.entity.QuestionSubmit;
 import lombok.Data;

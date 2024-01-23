@@ -3,7 +3,7 @@ package com.dlwlrma.oj.judge.codesandbox.impl;
 import com.dlwlrma.oj.judge.codesandbox.CodeSandBox;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeResponse;
-import com.dlwlrma.oj.model.dto.questionsubmit.JudgeInfo;
+import com.dlwlrma.oj.judge.codesandbox.model.JudgeInfo;
 import com.dlwlrma.oj.model.enums.JudgeInfoMessageEnum;
 import com.dlwlrma.oj.model.enums.QuestionSubmitStatusEnum;
 
