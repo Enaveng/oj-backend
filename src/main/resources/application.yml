@@ -91,4 +91,4 @@ cos:
 
 #代码沙箱类型配置
 codesandbox:
-  type: example
+  type: remote

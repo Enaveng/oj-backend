@@ -2,6 +2,7 @@ package com.dlwlrma.oj.judge.codesandbox;
 
 import com.dlwlrma.oj.judge.codesandbox.impl.ExampleCodeSandBox;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeRequest;
+import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeResponse;
 import com.dlwlrma.oj.model.enums.QuestionSubmitLanguageEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,17 +21,24 @@ class CodeSandBoxTest {
     @Test
     void executeCodeTest() {
         //用该方式创建代码沙箱很不方便 因此引入工厂模式 通过传入一个类型自动帮我们创建一个代码沙箱
-        ExampleCodeSandBox exampleCodeSandBox = new ExampleCodeSandBox();
-        String code = "int main(){}";
+        CodeSandBox codeSandBox = new CodeSanBoxFactory().createCodeSandBoxByType(type);
+        String code = "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        int a = Integer.parseInt(args[0]);\n" +
+                "        int b = Integer.parseInt(args[1]);\n" +
+                "        System.out.println(\"结果: \" + (a + b));\n" +
+                "    }\n" +
+                "}";
         String language = QuestionSubmitLanguageEnum.JAVA.getValue();
-        List<String> inputList = Arrays.asList("1,2", "3,4");
+        List<String> inputList = Arrays.asList("1 2", "3 4");
         //使用lombok链式创建一个请求对象
         ExecuteCodeRequest executeCodeRequest = new ExecuteCodeRequest().builder()
                 .inputList(inputList)
                 .code(code)
                 .language(language)
                 .build();
-        exampleCodeSandBox.executeCode(executeCodeRequest);
+        ExecuteCodeResponse executeCodeResponse = codeSandBox.executeCode(executeCodeRequest);
+        System.out.println(executeCodeResponse);
     }
 
 

@@ -72,10 +72,13 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "数据保存失败");
         }
         Long submitId = questionSubmit.getId();
-        //执行判题服务(异步执行)
+        //执行判题服务(异步执行)  异步执行时调用接口到达超时时间不会报错
         CompletableFuture.runAsync(() -> {
             judgeService.doJudge(submitId);
         });
+
+//        judgeService.doJudge(submitId);
+
         return submitId;
     }
 
