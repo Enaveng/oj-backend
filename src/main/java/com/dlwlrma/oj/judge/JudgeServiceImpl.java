@@ -3,9 +3,9 @@ package com.dlwlrma.oj.judge;
 import cn.hutool.json.JSONUtil;
 import com.dlwlrma.oj.common.ErrorCode;
 import com.dlwlrma.oj.exception.BusinessException;
-import com.dlwlrma.oj.judge.codesandbox.CodeSanBoxFactory;
-import com.dlwlrma.oj.judge.codesandbox.CodeSanBoxProxy;
 import com.dlwlrma.oj.judge.codesandbox.CodeSandBox;
+import com.dlwlrma.oj.judge.codesandbox.CodeSandBoxFactory;
+import com.dlwlrma.oj.judge.codesandbox.CodeSandBoxProxy;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeResponse;
 import com.dlwlrma.oj.judge.startegy.JudgeContext;
@@ -63,8 +63,8 @@ public class JudgeServiceImpl implements JudgeService {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新失败");
         }
         //调用代码沙箱得到执行结果
-        CodeSandBox codeSandBox = CodeSanBoxFactory.createCodeSandBoxByType(type);
-        CodeSanBoxProxy codeSanBoxProxy = new CodeSanBoxProxy(codeSandBox);
+        CodeSandBox codeSandBox = CodeSandBoxFactory.createCodeSandBoxByType(type); //工厂模式创建对应的代码沙箱
+        CodeSandBoxProxy codeSandBoxProxy = new CodeSandBoxProxy(codeSandBox);      //代理模式增强功能(打印日志)
         String language = questionSubmit.getLanguage();
         String code = questionSubmit.getCode();
         //数据库保存的是json格式 需要将其转换为List
@@ -76,7 +76,7 @@ public class JudgeServiceImpl implements JudgeService {
                 .inputList(inputList)
                 .language(language)
                 .build();
-        ExecuteCodeResponse executeCodeResponse = codeSanBoxProxy.executeCode(executeCodeRequest);
+        ExecuteCodeResponse executeCodeResponse = codeSandBoxProxy.executeCode(executeCodeRequest);
         List<String> outputList = executeCodeResponse.getOutputList();
         JudgeContext judgeContext = new JudgeContext();
         judgeContext.setJudgeInfo(executeCodeResponse.getJudgeInfo());

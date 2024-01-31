@@ -1,6 +1,5 @@
 package com.dlwlrma.oj.judge.codesandbox;
 
-import com.dlwlrma.oj.judge.codesandbox.impl.ExampleCodeSandBox;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.dlwlrma.oj.judge.codesandbox.model.ExecuteCodeResponse;
 import com.dlwlrma.oj.model.enums.QuestionSubmitLanguageEnum;
@@ -21,7 +20,7 @@ class CodeSandBoxTest {
     @Test
     void executeCodeTest() {
         //用该方式创建代码沙箱很不方便 因此引入工厂模式 通过传入一个类型自动帮我们创建一个代码沙箱
-        CodeSandBox codeSandBox = new CodeSanBoxFactory().createCodeSandBoxByType(type);
+        CodeSandBox codeSandBox = new CodeSandBoxFactory().createCodeSandBoxByType(type);
         String code = "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        int a = Integer.parseInt(args[0]);\n" +
@@ -44,7 +43,7 @@ class CodeSandBoxTest {
 
     @Test
     void executeCodeByTypeTest() {
-        CodeSandBox example = new CodeSanBoxFactory().createCodeSandBoxByType("Example");
+        CodeSandBox example = new CodeSandBoxFactory().createCodeSandBoxByType("Example");
         String code = "int main(){}";
         String language = QuestionSubmitLanguageEnum.JAVA.getValue();
         List<String> inputList = Arrays.asList("1,2", "3,4");
@@ -60,7 +59,7 @@ class CodeSandBoxTest {
 
     @Test
     void executeCodeByTypeProxyTest() {
-        CodeSandBox example = new CodeSanBoxFactory().createCodeSandBoxByType(type);
+        CodeSandBox example = new CodeSandBoxFactory().createCodeSandBoxByType(type);
         String code = "int main(){}";
         String language = QuestionSubmitLanguageEnum.JAVA.getValue();
         List<String> inputList = Arrays.asList("1,2", "3,4");
@@ -70,7 +69,7 @@ class CodeSandBoxTest {
                 .code(code)
                 .language(language)
                 .build();
-        CodeSanBoxProxy codeSanBoxProxy = new CodeSanBoxProxy(example);
-        codeSanBoxProxy.executeCode(executeCodeRequest);
+        CodeSandBoxProxy codeSandBoxProxy = new CodeSandBoxProxy(example);
+        codeSandBoxProxy.executeCode(executeCodeRequest);
     }
 }

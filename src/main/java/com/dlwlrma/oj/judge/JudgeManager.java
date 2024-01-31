@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JudgeManager {
     JudgeInfo doJudge(JudgeContext judgeContext) {
         QuestionSubmit questionSubmit = judgeContext.getQuestionSubmit();
-        JudgeStrategy judgeStrategy = new DefaultJudgeStrategy();
+        JudgeStrategy judgeStrategy = new DefaultJudgeStrategy(); //默认创建的是DefaultJudgeStrategy
         //判断提交题目的语言是什么
         String language = questionSubmit.getLanguage();
         if (language.equals(QuestionSubmitLanguageEnum.JAVA.getValue())) {
